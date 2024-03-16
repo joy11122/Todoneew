@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do List</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    input[type="text"] {
+        width: 70%;
+        padding: 10px;
+        margin: 10px;
+    }
+    button {
+        padding: 5px 20px;
+        margin: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color:blue;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li{
+        padding: 5px;
+        border-bottom: 1px solid #ddd;
+        
+    }
+    li:hover{
+        background-color:crimson;
+        font-size:20px;
+        color:white;
+    }
+    li:last-child {
+        border-bottom: none;
+    }
+    #tasklist{
+        display:flex;
+    }
+   span{
+       background-color:gold;
+       cursor:pointer;
+       display:flex;
+       position:right;
+       text-align:center;
+       margin-left:200px;
+   }
+</style>
+</head>
+<body onload="rendertask()">
+
+<h2>To-Do List</h2>
+
+<input type="text" id="taskInput" placeholder="Enter task">
+<button onclick="addTask()">Add</button>
+
+<ul id="taskList">
+</ul>
+
+<script>
+    let ar=getstdata();
+    function getstdata(){
+        return JSON.parse(localStorage.getItem("joy"))||[];
+    }
+   function addstoreage(todovalue){
+       return localStorage.setItem("joy",JSON.stringify(todovalue))
+   };
+function addTask(){
+    var input = document.getElementById("taskInput");
+    var task = input.value;
+    if (task == 0) {
+        alert("Please enter a task!");
+        return;
+    }
+  
+        ar.push(input.value);
+   addstoreage(ar);
+   
+    var list = document.getElementById("taskList");
+    var listItem = document.createElement("li");
+        var dbutton = document.createElement("span");
+        dbutton.innerText="Delete";
+    listItem.innerText = task;
+    list.appendChild(dbutton);
+    list.appendChild(listItem);
+    input.value = '';
+  };
+
+function rendertask(){
+if(ar.length!==0){
+    ar.map((elm)=>{
+   var list = document.getElementById("taskList");
+         
+    var listItem = document.createElement("li");
+    listItem.innerHTML =`${elm} <button onclick="remobe()">Delete</button>`;
+    list.appendChild(listItem);
+  
+
+    
+})
+}
+}
+
+        function remobe(){
+       const btn= document.querySelector("li");
+       
+            btn.remove();
+        }
+// You can add functionality to remove tasks, mark as completed, etc.
+</script>
+
+</body>
+</html>
